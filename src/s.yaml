@@ -30,12 +30,12 @@ services:
     props:
       region: ${vars.region}
       service:
-        name: "{{ serviceName }}"
+        name: zip-os
         description: zip oss sample
-        role: "{{ roleArn }}"
+        role: ^acs:ram::[0-9]*:role/.*$
         internetAccess: true
       function:
-        name: "{{ functionName }}"
+        name: zip-oss-func
         handler: main.main_handler
         timeout: 1800
         runtime: python3.9
