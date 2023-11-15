@@ -4,6 +4,7 @@ import json
 import time
 import logging
 import zipfile
+import re
 import oss2
 from oss2.models import PartInfo
 from task_queue import TaskQueue
@@ -41,11 +42,12 @@ def main_handler(environ, start_response):
 def _main_handler(oss_client, evt, context):
     source_dir = evt.get('source-dir')
     source_files = evt.get('source-files')
+    output_file_names = evt.get('dest-file-names')
     dest_file = evt.get('dest-file')
     if not dest_file:
         dest_file = 'output/' + context.requestId + '.zip'
 
-    return zip_files(oss_client, source_dir, source_files, dest_file)
+    return zip_files(oss_client, source_dir, source_files, dest_file, output_file_names)
 
 
 def get_oss_client(evt, context):
@@ -72,7 +74,7 @@ def sign_url(oss_client, key, content_type=''):
 # most 8MB data and uploads to OSS concurrently by 8 threads
 
 
-def zip_files(oss_client, source_dir, source_files, dest_file):
+def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names=None):
     LOG.info('create zip, source_dir: %s, source_files: %s, dest_file: %s',
              source_dir, source_files, dest_file)
 
@@ -83,10 +85,22 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
         if dir is None:
             dir = ''
         new_key = key.replace(dir, '', 1)
-        LOG.info('add zip file key: %s, zip_key: %s',
-                 key,  new_key)
         if key[-1] == '/': # filter dir
             return
+        # show out file name
+        if isinstance(output_file_names, dict):
+            if key in output_file_names:
+                print("key is in dict", key)
+                new_key = output_file_names[key]
+        # replace unsupport char * | < > ?
+        new_key = re.sub("[*|<>?]", "", new_key)
+        # replace /, can't show files in WIN
+        if new_key.startswith("/"):
+            new_key = new_key[1:]
+        if not new_key:
+            new_key = key.replace(dir, '', 1)
+        LOG.info('add zip file key: %s, zip_key: %s',
+                 key,  new_key)
         obj = oss_client.get_object(key)
         zip_file.write_file(new_key, obj,
                             compress_type=zipfile.ZIP_STORED)
