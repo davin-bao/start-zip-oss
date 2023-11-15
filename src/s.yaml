@@ -30,9 +30,9 @@ services:
     props:
       region: ${vars.region}
       service:
-        name: zip-os
+        name: zip-os-davin
         description: zip oss sample
-        role: 'acs:ram::xxx:role/AliyunFcDefaultRole'
+        role: 'acs:ram::1077233873421667:role/aliyunfcdefaultrole'
         internetAccess: true
       function:
         name: zip-oss-func
