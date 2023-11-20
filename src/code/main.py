@@ -90,8 +90,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names
         # show out file name
         if isinstance(output_file_names, dict):
             if key in output_file_names:
-                print("key is in dict", key)
-                new_key = output_file_names[key]
+                new_key = output_file_names[key].replace(dir, '', 1)
         # replace unsupport char * | < > ?
         new_key = re.sub("[*|<>?]", "", new_key)
         # replace /, can't show files in WIN
