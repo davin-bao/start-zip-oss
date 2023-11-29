@@ -5,6 +5,7 @@ import time
 import logging
 import zipfile
 import re
+import os
 import oss2
 from oss2.models import PartInfo
 from task_queue import TaskQueue
@@ -90,7 +91,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names
         # show out file name
         if isinstance(output_file_names, dict):
             if key in output_file_names:
-                new_key = output_file_names[key].replace(dir, '', 1)
+                new_key = os.path.dirname(new_key) + "/" + output_file_names[key]
         # replace unsupport char * | < > ?
         new_key = re.sub("[*|<>?]", "", new_key)
         # replace /, can't show files in WIN
