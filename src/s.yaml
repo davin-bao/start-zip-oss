@@ -22,7 +22,7 @@ name: Zip OSS
 access: "{{ access }}"
 
 vars:
-  region: "cn-hangzhou" # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
+  region: ${env('FC_REGION')} # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
 
 services:
   fc-zip-oss-service:
