@@ -28,7 +28,7 @@ services:
   fc-zip-oss-service:
     component: fc
     props:
-      region: ${vars.region}
+      region: ${env("FC_REGION")}
       service:
         name: zip-os-davin
         description: zip oss sample
