@@ -22,7 +22,7 @@ name: Zip OSS
 access: "{{ access }}"
 
 vars:
-  region: "cn-hangzhou" # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
+  region: "{{ region }}" # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
 
 services:
   fc-zip-oss-service:
@@ -30,12 +30,12 @@ services:
     props:
       region: ${vars.region}
       service:
-        name: zip-os-davin
+        name: "{{ serviceName }}"
         description: zip oss sample
-        role: 'acs:ram::1077233873421667:role/aliyunfcdefaultrole'
+        role: "{{ roleArn }}"
         internetAccess: true
       function:
-        name: zip-oss-func
+        name: "{{ functionName }}"
         handler: main.main_handler
         timeout: 1800
         runtime: python3.9
