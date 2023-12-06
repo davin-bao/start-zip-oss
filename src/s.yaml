@@ -22,7 +22,7 @@ name: Zip OSS
 access: "{{ access }}"
 
 vars:
-  region: cn-hangzhou # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
+  region: cn-shanghai # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
 
 services:
   fc-zip-oss-service:
@@ -30,7 +30,7 @@ services:
     props:
       region: ${vars.region}
       service:
-        name: zip-oss-hangzhou
+        name: zip-oss-shanghai
         description: zip oss sample
         role: 'acs:ram::1077233873421667:role/aliyunfcdefaultrole'
         internetAccess: true
