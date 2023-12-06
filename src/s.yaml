@@ -30,7 +30,7 @@ services:
     props:
       region: ${vars.region}
       service:
-        name: zip-os-hangzhou
+        name: zip-oss-hangzhou
         description: zip oss sample
         role: 'acs:ram::1077233873421667:role/aliyunfcdefaultrole'
         internetAccess: true
