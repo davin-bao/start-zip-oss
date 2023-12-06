@@ -94,11 +94,11 @@ def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names
                 new_key = os.path.dirname(new_key) + "/" + output_file_names[key]
         # replace unsupport char * | < > ?
         new_key = re.sub("[*|<>?]", "", new_key)
-        # replace /, can't show files in WIN
-        if new_key.startswith("/"):
-            new_key = new_key[1:]
         if not new_key:
             new_key = key.replace(dir, '', 1)
+        # replace /, can't show files in WIN
+        while new_key.startswith("/"):
+            new_key = new_key[1:]
         LOG.info('add zip file key: %s, zip_key: %s',
                  key,  new_key)
         obj = oss_client.get_object(key)
