@@ -56,7 +56,7 @@ def get_oss_client(evt, context):
     creds = context.credentials
     auth = oss2.StsAuth(creds.accessKeyId,
                         creds.accessKeySecret, creds.securityToken)
-    oss_client = oss2.Bucket(auth, 'oss-' + context.region +
+    oss_client = oss2.Bucket(auth, 'https://oss-' + context.region +
                              '-internal.aliyuncs.com', bucket)
     return oss_client
 
