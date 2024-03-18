@@ -131,6 +131,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names
             res = oss_client.upload_part(
                 dest_file, upload_id, part_no, part_data)
             parts.append(PartInfo(part_no, res.etag))
+            LOG.info('consumer, part_no: %s', part_no)
 
     task_q = TaskQueue(producer, [consumer] * 16)
     task_q.run()
