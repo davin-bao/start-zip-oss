@@ -110,7 +110,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file, output_file_names
         with StreamZipFile(mem_buf, 'w') as zip_file:
             if isinstance(source_files, list):
                 for file in source_files:
-                    zip_add_file(zip_file, file, None)
+                    zip_add_file(zip_file, file, os.path.dirname(file))
             elif isinstance(source_dir, str):
                 for obj in oss2.ObjectIterator(oss_client, prefix=source_dir):
                     zip_add_file(zip_file, obj.key, source_dir)
